@@ -19,3 +19,8 @@ optional arguments:
   --headcrop HEADCROP   Trim n nucleotides from start of read  
   --tailcrop TAILCROP   Trim n nucleotides from end of read
 ```
+
+Example:
+```bash
+zcat reads.fastq.gz | NanoFilt.py -q 10 -l 500 --headcrop 50 | bwa mem -t 48 -x ont2d genome.fa - | samtools sort -O BAM -@24 -o alignment.bam -
+```
