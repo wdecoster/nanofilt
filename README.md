@@ -8,9 +8,17 @@ Intended to be used:
 - prior to mapping
 - in a stream between extraction and mapping
 
+### INSTALLATION:
+
+```bash
+pip install nanofilt
+```
+
+Written for Python 3, might also work for python2.7 (untested).
+
 ### USAGE:
 ```
-usage: NanoFilt.py [-h] [-q QUALITY] [-l LENGTH] [--headcrop HEADCROP] [--tailcrop TAILCROP]
+usage: NanoFilt [-h] [-q QUALITY] [-l LENGTH] [--headcrop HEADCROP] [--tailcrop TAILCROP]
 
 optional arguments:  
   -h, --help            show this help message and exit  
@@ -22,5 +30,6 @@ optional arguments:
 
 Example:
 ```bash
-zcat reads.fastq.gz | NanoFilt.py -q 10 -l 500 --headcrop 50 | bwa mem -t 48 -x ont2d genome.fa - | samtools sort -O BAM -@24 -o alignment.bam -
+zcat reads.fastq.gz | NanoFilt -q 10 -l 500 --headcrop 50 | bwa mem -t 48 -x ont2d genome.fa - | samtools sort -O BAM -@24 -o alignment.bam -
+zcat reads.fastq.gz | NanoFilt -q 12 --headcrop 75 | gzip > trimmed-reads.fastq.gz
 ```
