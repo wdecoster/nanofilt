@@ -4,7 +4,7 @@ Example usage:
 zcat reads.fastq.gz | NanoFilt.py -q 10 -l 500 --headcrop 50 | bwa mem -t 48 -x ont2d genome.fa - | samtools sort -O BAM -@24 -o alignment.bam -
 '''
 
-__version__= 0.1.0
+__version__= "1.0.3"
 
 from Bio import SeqIO
 import argparse
@@ -32,7 +32,7 @@ def filterstream(fq, args):
     Optionally trim a number of nucleotides from beginning and end.
     '''
     for record in SeqIO.parse(fq, "fastq"):
-        if aveQualFastq(record.letter_annotations["phred_quality"]) > args.quality and len(record) > args.length:
+        if aveQual(record.letter_annotations["phred_quality"]) > args.quality and len(record) > args.length:
             print(record[args.headcrop:args.tailcrop].format("fastq"), end="")
 
 if __name__ == "__main__":
