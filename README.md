@@ -1,5 +1,5 @@
 # Nanofilt
-Filtering and trimming of Oxford Nanopore sequencing data
+Filtering and trimming of Oxford Nanopore sequencing data.
 
 Filtering on quality and/or read length, and optional trimming after passing filters
 Reads from stdin, writes to stdout.  
@@ -7,6 +7,8 @@ Intended to be used:
 - directly after fastq extraction
 - prior to mapping
 - in a stream between extraction and mapping
+
+See also [my post about NanoFilt on my blog Gigabase or gigabyte](https://gigabaseorgigabyte.wordpress.com/2017/06/05/trimming-and-filtering-oxford-nanopore-sequencing-reads/).  
 
 ### INSTALLATION:
 
