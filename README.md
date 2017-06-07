@@ -16,7 +16,7 @@ See also [my post about NanoFilt on my blog Gigabase or gigabyte](https://gigaba
 pip install nanofilt
 ```
 
-Written for Python 3, might also work for python2.7 (untested).
+NanoFilt is written for Python 3, might also work for python2.7 (untested).
 
 ### USAGE:
 ```
