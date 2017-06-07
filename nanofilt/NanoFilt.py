@@ -4,12 +4,13 @@ Example usage:
 zcat reads.fastq.gz | NanoFilt.py -q 10 -l 500 --headcrop 50 | bwa mem -t 48 -x ont2d genome.fa - | samtools sort -O BAM -@24 -o alignment.bam -
 '''
 
-__version__= "1.0.3"
-
+from __future__ import print_function
 from Bio import SeqIO
 import argparse
 import sys
 from nanomath import aveQual
+__version__= "1.0.4"
+
 
 def main():
     args = getArgs()
