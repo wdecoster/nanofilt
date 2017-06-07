@@ -8,7 +8,7 @@ here = path.abspath(path.dirname(__file__))
 
 setup(
     name='NanoFilt',
-    version='1.0.3',
+    version='1.0.4',
     description='Filtering and trimming of Oxford Nanopore Sequencing data',
     long_description='Filtering and trimming of Oxford Nanopore Sequencing data.',
     url='https://github.com/wdecoster/nanofilt',
