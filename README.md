@@ -16,7 +16,7 @@ See also [my post about NanoFilt on my blog Gigabase or gigabyte](https://gigaba
 pip install nanofilt
 ```
 
-NanoFilt is written for Python 3, might also work for python2.7 (untested).
+NanoFilt is written for Python 3, and should also work for python2.7.
 
 ### USAGE:
 ```
@@ -34,4 +34,5 @@ Example:
 ```bash
 zcat reads.fastq.gz | NanoFilt -q 10 -l 500 --headcrop 50 | bwa mem -t 48 -x ont2d genome.fa - | samtools sort -O BAM -@24 -o alignment.bam -
 zcat reads.fastq.gz | NanoFilt -q 12 --headcrop 75 | gzip > trimmed-reads.fastq.gz
+zcat reads.fastq.gz | NanoFilt -q 10 | gzip > highQuality-reads.fastq.gz
 ```
