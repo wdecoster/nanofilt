@@ -6,9 +6,11 @@ from os import path
 
 here = path.abspath(path.dirname(__file__))
 
+exec(open('nanofilt/version.py').read())
+
 setup(
     name='NanoFilt',
-    version='1.0.4',
+    version=__version__,
     description='Filtering and trimming of Oxford Nanopore Sequencing data',
     long_description='Filtering and trimming of Oxford Nanopore Sequencing data.',
     url='https://github.com/wdecoster/nanofilt',
