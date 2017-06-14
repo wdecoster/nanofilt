@@ -9,7 +9,7 @@ from Bio import SeqIO
 import argparse
 import sys
 from nanomath import aveQual
-__version__= "1.0.4"
+from nanofilt.version import __version__
 
 
 def main():
