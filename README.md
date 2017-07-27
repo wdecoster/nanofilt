@@ -4,10 +4,10 @@ Filtering and trimming of Oxford Nanopore sequencing data.
 Filtering on quality and/or read length, and optional trimming after passing filters.  
 Reads from stdin, writes to stdout.  
 
-Intended to be used:
-- directly after fastq extraction
-- prior to mapping
-- in a stream between extraction and mapping
+Intended to be used:  
+- directly after fastq extraction  
+- prior to mapping  
+- in a stream between extraction and mapping  
 
 See also [my post about NanoFilt on my blog Gigabase or gigabyte](https://gigabaseorgigabyte.wordpress.com/2017/06/05/trimming-and-filtering-oxford-nanopore-sequencing-reads/).  
 Due to [a discrepancy](https://gigabaseorgigabyte.wordpress.com/2017/07/14/calculated-average-quality-vs-albacore-summary/) between calculated read quality and the quality as summarized by albacore this script takes since v1.1.0 optionally also a `--summary` argument. Using this argument with the sequencing_summary.txt file from albacore will do the filtering using the quality scores from the summary. It's also faster.
