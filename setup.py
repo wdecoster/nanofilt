@@ -12,7 +12,7 @@ setup(
     name='NanoFilt',
     version=__version__,
     description='Filtering and trimming of Oxford Nanopore Sequencing data',
-    long_description='Filtering and trimming of Oxford Nanopore Sequencing data.',
+    long_description=open(path.join(here, "README.rst")).read(),
     url='https://github.com/wdecoster/nanofilt',
     author='Wouter De Coster',
     author_email='decosterwouter@gmail.com',
