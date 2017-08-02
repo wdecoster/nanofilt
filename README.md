@@ -18,6 +18,13 @@ Due to [a discrepancy](https://gigabaseorgigabyte.wordpress.com/2017/07/14/calcu
 pip install nanofilt
 pip install nanofilt --upgrade
 ```
+or
+
+![conda badge](https://anaconda.org/bioconda/nanofilt/badges/installer/conda.svg)
+```bash
+conda install -c bioconda nanofilt
+```
+
 
 NanoFilt is written for Python 3, but should also work for python2.7.
 
