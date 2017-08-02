@@ -20,7 +20,7 @@ pip install nanofilt --upgrade
 ```
 or
 
-![conda badge](https://anaconda.org/bioconda/nanofilt/badges/installer/conda.svg)
+[![conda badge](https://anaconda.org/bioconda/nanofilt/badges/installer/conda.svg)](https://anaconda.org/bioconda/nanofilt)
 ```bash
 conda install -c bioconda nanofilt
 ```
