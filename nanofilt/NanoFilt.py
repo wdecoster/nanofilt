@@ -29,6 +29,10 @@ def getArgs():
     parser.add_argument("--tailcrop", help="Trim n nucleotides from end of read", default=None, type=int)
     parser.add_argument("-q", "--quality", help="Filter on a minimum average read quality score", default=0, type=int)
     parser.add_argument("-s", "--summary", help="Use summary file for quality scores")
+    parser.add_argument("--readtype",
+    					help="Which read type to extract information about from summary. Options are 1D or 2D",
+    					default="1D",
+    					choices=['1D', '2D'])
     return parser.parse_args()
 
 
@@ -47,7 +51,7 @@ def filterusingSummary(fq, args):
     Use the summary file from albacore for more accurate quality estimate
     Get the dataframe from nanoget, convert to dictionary
     '''
-    data = {entry[0]: entry[1] for entry in processSummary(args.summary)[["readIDs", "quals"]].itertuples(index=False)}
+    data = {entry[0]: entry[1] for entry in processSummary(args.summary, args.readtype)[["readIDs", "quals"]].itertuples(index=False)}
     try:
         for record in SeqIO.parse(fq, "fastq"):
             if data[record.id] > args.quality and len(record) > args.length:
