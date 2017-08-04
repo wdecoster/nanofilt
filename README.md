@@ -24,7 +24,8 @@ or
 ```bash
 conda install -c bioconda nanofilt
 ```
-
+## STATUS
+[![Build Status](https://travis-ci.org/wdecoster/nanofilt.svg?branch=master)](https://travis-ci.org/wdecoster/nanofilt)
 
 NanoFilt is written for Python 3, but should also work for python2.7.
 
