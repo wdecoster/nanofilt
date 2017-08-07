@@ -30,9 +30,9 @@ def getArgs():
     parser.add_argument("-q", "--quality", help="Filter on a minimum average read quality score", default=0, type=int)
     parser.add_argument("-s", "--summary", help="Use summary file for quality scores")
     parser.add_argument("--readtype",
-    					help="Which read type to extract information about from summary. Options are 1D or 2D",
-    					default="1D",
-    					choices=['1D', '2D'])
+                        help="Which read type to extract information about from summary. Options are 1D or 2D",
+                        default="1D",
+                        choices=['1D', '2D'])
     return parser.parse_args()
 
 
