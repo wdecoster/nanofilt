@@ -25,7 +25,8 @@ or
 conda install -c bioconda nanofilt
 ```
 ## STATUS
-[![Build Status](https://travis-ci.org/wdecoster/nanofilt.svg?branch=master)](https://travis-ci.org/wdecoster/nanofilt)
+[![Build Status](https://travis-ci.org/wdecoster/nanofilt.svg?branch=master)](https://travis-ci.org/wdecoster/nanofilt) [![Code Health](https://landscape.io/github/wdecoster/nanofilt/master/landscape.svg?style=flat)](https://landscape.io/github/wdecoster/nanofilt/master)
+
 
 NanoFilt is written for Python 3, but should also work for python2.7.
 
