@@ -1,7 +1,7 @@
-#wdecoster
+# wdecoster
 '''
 Example usage:
-gunzip -c reads.fastq.gz | NanoFilt.py -q 10 -l 500 --headcrop 50 | bwa mem -t 48 -x ont2d genome.fa - | samtools sort -O BAM -@24 -o alignment.bam -
+gunzip -c reads.fastq.gz | NanoFilt.py -q 10 -l 500 --headcrop 50 | minimap2 genome.fa - | samtools sort -@24 -o alignment.bam -
 '''
 
 from __future__ import print_function
@@ -24,7 +24,8 @@ def main():
 
 
 def getArgs():
-    parser = argparse.ArgumentParser(description="Perform quality and or length filtering of Nanopore fastq data on stdin.")
+    parser = argparse.ArgumentParser(
+        description="Perform quality and or length filtering of Nanopore fastq data on stdin.")
     parser.add_argument("-v", "--version",
                         help="Print version and exit.",
                         action="version",
@@ -69,7 +70,8 @@ def filterusingSummary(fq, args):
     Use the summary file from albacore for more accurate quality estimate
     Get the dataframe from nanoget, convert to dictionary
     '''
-    data = {entry[0]: entry[1] for entry in processSummary(args.summary, args.readtype)[["readIDs", "quals"]].itertuples(index=False)}
+    data = {entry[0]: entry[1] for entry in processSummary(args.summary, args.readtype)[
+        ["readIDs", "quals"]].itertuples(index=False)}
     try:
         for record in SeqIO.parse(fq, "fastq"):
             if data[record.id] > args.quality and len(record) > args.length:
