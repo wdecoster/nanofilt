@@ -29,10 +29,10 @@ setup(
     ],
     keywords='nanopore sequencing processing trimming filtering',
     packages=find_packages(),
-    install_requires=['biopython', 'nanomath>=0.12.0', 'nanoget>=0.10.6'],
+    install_requires=['biopython', 'nanomath>=0.12.8', 'nanoget>=0.10.6'],
     package_data={'nanofilt': []},
-        package_dir={'nanofilt': 'nanofilt'},
-        include_package_data=True,
-        entry_points={
-            'console_scripts': ['NanoFilt=nanofilt.NanoFilt:main',]}
+    package_dir={'nanofilt': 'nanofilt'},
+    include_package_data=True,
+    entry_points={
+        'console_scripts': ['NanoFilt=nanofilt.NanoFilt:main', ]}
 )
