@@ -32,7 +32,7 @@ def getArgs():
                         version='NanoFilt {}'.format(__version__))
     parser.add_argument("-l", "--length",
                         help="Filter on a minimum read length",
-                        default=0,
+                        default=1,
                         type=int)
     parser.add_argument("--headcrop",
                         help="Trim n nucleotides from start of read",
@@ -60,9 +60,10 @@ def filterstream(fq, args):
     If a fastq record passes quality filter (optional) and length filter (optional), print to stdout
     Optionally trim a number of nucleotides from beginning and end.
     '''
-    for record in SeqIO.parse(fq, "fastq"):
-        if aveQual(record.letter_annotations["phred_quality"]) > args.quality and len(record) > args.length:
-            print(record[args.headcrop:args.tailcrop].format("fastq"), end="")
+    minlen = args.length + int(args.headcrop or 0) - (int(args.tailcrop or 0))
+    for rec in SeqIO.parse(fq, "fastq"):
+        if aveQual(rec.letter_annotations["phred_quality"]) > args.quality and len(rec) > minlen:
+            print(rec[args.headcrop:args.tailcrop].format("fastq"), end="")
 
 
 def filterusingSummary(fq, args):
@@ -77,7 +78,8 @@ def filterusingSummary(fq, args):
             if data[record.id] > args.quality and len(record) > args.length:
                 print(record[args.headcrop:args.tailcrop].format("fastq"), end="")
     except KeyError:
-        sys.exit('\nERROR: mismatch between sequencing_summary and fastq file:\n{} was not found in the summary file.\nQuitting.'.format(record.id))
+        sys.exit('\nERROR: mismatch between sequencing_summary and fastq file: \
+                 {} was not found in the summary file.\nQuitting.'.format(record.id))
 
 
 if __name__ == "__main__":
