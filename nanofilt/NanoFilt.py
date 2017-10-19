@@ -42,7 +42,7 @@ def main():
 
 def get_args():
     parser = ArgumentParser(
-        description="Perform quality and or length filtering of Nanopore fastq data on stdin.")
+        description="Perform quality and/or length and/or GC filtering of Nanopore fastq data on stdin.")
     parser.add_argument("-v", "--version",
                         help="Print version and exit.",
                         action="version",
@@ -63,6 +63,14 @@ def get_args():
                         help="Filter on a minimum average read quality score",
                         default=0,
                         type=int)
+    parser.add_argument("--minGC",
+                        help="Sequences must have GC content >= to this.  Float between 0.0 and 1.0.  Ignored if using summary file.",
+                        default=0.0,
+                        type=float)
+    parser.add_argument("--maxGC",
+                        help="Sequences must have GC content <= to this.  Float between 0.0 and 1.0.  Ignored if using summary file.",
+                        default=1.0,
+                        type=float)
     parser.add_argument("-s", "--summary",
                         help="Use summary file for quality scores")
     parser.add_argument("--readtype",
@@ -80,7 +88,13 @@ def filter_stream(fq, args):
     '''
     minlen = args.length + int(args.headcrop or 0) - (int(args.tailcrop or 0))
     for rec in SeqIO.parse(fq, "fastq"):
-        if aveQual(rec.letter_annotations["phred_quality"]) > args.quality and len(rec) > minlen:
+        # assume nominal gc
+        gc = 0.50
+        if (args.minGC > 0.0 or args.maxGC < 1.0):
+            # one of the GC arguments has been set, we need to calcualte GC
+            gc = (rec.seq.upper().count("C") + rec.seq.upper().count("G")) / len(rec) 
+
+        if aveQual(rec.letter_annotations["phred_quality"]) > args.quality and len(rec) > minlen and gc >= args.minGC and gc <= args.maxGC:
             print(rec[args.headcrop:args.tailcrop].format("fastq"), end="")
 
 
