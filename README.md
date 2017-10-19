@@ -47,6 +47,10 @@ optional arguments:
   -l, --length LENGTH Filter on a minimum read length  
   --headcrop HEADCROP   Trim n nucleotides from start of read  
   --tailcrop TAILCROP   Trim n nucleotides from end of read
+  --minGC MINGC         Sequences must have GC content >= to this. Float
+                        between 0.0 and 1.0. Ignored if using summary file.
+  --maxGC MAXGC         Sequences must have GC content <= to this. Float
+                        between 0.0 and 1.0. Ignored if using summary file.
 ```
 
 Example:
