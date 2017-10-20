@@ -42,7 +42,8 @@ def main():
 
 def get_args():
     parser = ArgumentParser(
-        description="Perform quality and/or length and/or GC filtering of Nanopore fastq data on stdin.")
+        description="Perform quality and/or length and/or GC filtering of Nanopore fastq data.\
+                     Reads on stdin.")
     parser.add_argument("-v", "--version",
                         help="Print version and exit.",
                         action="version",
@@ -64,11 +65,13 @@ def get_args():
                         default=0,
                         type=int)
     parser.add_argument("--minGC",
-                        help="Sequences must have GC content >= to this.  Float between 0.0 and 1.0. Ignored if using summary file.",
+                        help="Sequences must have GC content >= to this.  Float between 0.0 and 1.0. \
+                              Ignored if using summary file.",
                         default=0.0,
                         type=float)
     parser.add_argument("--maxGC",
-                        help="Sequences must have GC content <= to this.  Float between 0.0 and 1.0. Ignored if using summary file.",
+                        help="Sequences must have GC content <= to this.  Float between 0.0 and 1.0. \
+                              Ignored if using summary file.",
                         default=1.0,
                         type=float)
     parser.add_argument("-s", "--summary",
@@ -94,7 +97,9 @@ def filter_stream(fq, args):
             # one of the GC arguments has been set, we need to calcualte GC
             gc = (rec.seq.upper().count("C") + rec.seq.upper().count("G")) / len(rec)
 
-        if ave_qual(rec.letter_annotations["phred_quality"]) > args.quality and len(rec) > minlen and args.minGC <= gc <= args.maxGC:
+        if ave_qual(rec.letter_annotations["phred_quality"]) > args.quality \
+                and len(rec) > minlen \
+                and args.minGC <= gc <= args.maxGC:
             print(rec[args.headcrop:args.tailcrop].format("fastq"), end="")
 
 
