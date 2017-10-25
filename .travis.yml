@@ -11,3 +11,6 @@ python:
 install: "pip install nanofilt"
 # command to run tests
 script: NanoFilt -h
+
+notifications:
+  email: false
