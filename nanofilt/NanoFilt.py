@@ -23,7 +23,7 @@ gunzip -c reads.fastq.gz | \
 
 from __future__ import print_function
 from Bio import SeqIO
-from argparse import ArgumentParser
+from argparse import ArgumentParser, ArgumentTypeError
 import sys
 from nanomath import ave_qual
 from nanoget import process_summary
@@ -68,12 +68,12 @@ def get_args():
                         help="Sequences must have GC content >= to this.  Float between 0.0 and 1.0. \
                               Ignored if using summary file.",
                         default=0.0,
-                        type=float)
+                        type=valid_GC)
     parser.add_argument("--maxGC",
                         help="Sequences must have GC content <= to this.  Float between 0.0 and 1.0. \
                               Ignored if using summary file.",
                         default=1.0,
-                        type=float)
+                        type=valid_GC)
     parser.add_argument("-s", "--summary",
                         help="Use summary file for quality scores")
     parser.add_argument("--readtype",
@@ -81,7 +81,17 @@ def get_args():
                               Options are 1D, 2D or 1D2",
                         default="1D",
                         choices=['1D', '2D', "1D2"])
-    return parser.parse_args()
+    args = parser.parse_args()
+    if args.minGC > args.maxGC:
+        sys.exit("NanoFilt: error: argument --minGC should be smaller than --maxGC")
+    return args
+
+
+def valid_GC(x):
+    x = float(x)
+    if x < 0.0 or x > 1.0:
+        raise ArgumentTypeError("{} not in range [0.0, 1.0]".format(x))
+    return x
 
 
 def filter_stream(fq, args):
@@ -91,12 +101,11 @@ def filter_stream(fq, args):
     '''
     minlen = args.length + int(args.headcrop or 0) - (int(args.tailcrop or 0))
     for rec in SeqIO.parse(fq, "fastq"):
-        # assume nominal gc
-        gc = 0.50
         if (args.minGC > 0.0 or args.maxGC < 1.0):
             # one of the GC arguments has been set, we need to calcualte GC
             gc = (rec.seq.upper().count("C") + rec.seq.upper().count("G")) / len(rec)
-
+        else:
+            gc = 0.50  # dummy variable
         if ave_qual(rec.letter_annotations["phred_quality"]) > args.quality \
                 and len(rec) > minlen \
                 and args.minGC <= gc <= args.maxGC:
