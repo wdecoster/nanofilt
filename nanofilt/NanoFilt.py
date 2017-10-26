@@ -88,6 +88,10 @@ def get_args():
 
 
 def valid_GC(x):
+    '''
+    type function for argparse to check if the supplied value for minGC and maxGC
+    is a valid input, being between 0 and 1
+    '''
     x = float(x)
     if x < 0.0 or x > 1.0:
         raise ArgumentTypeError("{} not in range [0.0, 1.0]".format(x))
