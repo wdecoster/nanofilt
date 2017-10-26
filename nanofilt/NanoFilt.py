@@ -28,16 +28,30 @@ import sys
 from nanomath import ave_qual
 from nanoget import process_summary
 from nanofilt.version import __version__
+import logging
 
 
 def main():
     args = get_args()
-    if args.tailcrop:
-        args.tailcrop = -args.tailcrop
-    if args.summary:
-        filter_using_summary(sys.stdin, args)
-    else:
-        filter_stream(sys.stdin, args)
+    try:
+        logging.basicConfig(
+            format='%(asctime)s %(message)s',
+            filename="NanoFilt.log",
+            level=logging.INFO)
+    except PermissionError:
+        pass  # indicates that user has no write permission in this directory. No logs then
+    try:
+        logging.info('NanoFilt {} started with arguments {}'.format(__version__, args))
+        if args.tailcrop:
+            args.tailcrop = -args.tailcrop
+        if args.summary:
+            filter_using_summary(sys.stdin, args)
+        else:
+            filter_stream(sys.stdin, args)
+        logging.info('NanoFilt finished.')
+    except Exception as e:
+        logging.error(e, exc_info=True)
+        raise
 
 
 def get_args():
@@ -131,6 +145,8 @@ def filter_using_summary(fq, args):
             if data[record.id] > args.quality and len(record) > args.length:
                 print(record[args.headcrop:args.tailcrop].format("fastq"), end="")
     except KeyError:
+        logging.error("mismatch between summary and fastq: \
+                       {} was not found in the summary file.".format(record.id))
         sys.exit('\nERROR: mismatch between sequencing_summary and fastq file: \
                  {} was not found in the summary file.\nQuitting.'.format(record.id))
 
