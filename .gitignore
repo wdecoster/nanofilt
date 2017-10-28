@@ -1,3 +1,5 @@
 .remote-sync.json
 __pycache__/
 NanoFilt.egg-info/
+dist/
+README.rst
