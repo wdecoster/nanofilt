@@ -20,19 +20,12 @@ Due to [a discrepancy](https://gigabaseorgigabyte.wordpress.com/2017/07/14/calcu
 
 ### INSTALLATION AND UPGRADING:
 
-```bash
-pip install nanofilt
-pip install nanofilt --upgrade
-```
+`pip install nanofilt`  
+`pip install nanofilt --upgrade`
+
 or
 
-[![conda badge](https://anaconda.org/bioconda/nanofilt/badges/installer/conda.svg)](https://anaconda.org/bioconda/nanofilt)
-```bash
-conda install -c bioconda nanofilt
-```
-## STATUS
-[![Build Status](https://travis-ci.org/wdecoster/nanofilt.svg?branch=master)](https://travis-ci.org/wdecoster/nanofilt) [![Code Health](https://landscape.io/github/wdecoster/nanofilt/master/landscape.svg?style=flat)](https://landscape.io/github/wdecoster/nanofilt/master)
-
+`conda install -c bioconda nanofilt`
 
 NanoFilt is written for Python 3.
 
@@ -53,9 +46,11 @@ optional arguments:
                         between 0.0 and 1.0. Ignored if using summary file.
 ```
 
-Example:
+### EXAMPLES
 ```bash
 gunzip -c reads.fastq.gz | NanoFilt -q 10 -l 500 --headcrop 50 | minimap2 genome.fa - | samtools sort -O BAM -@24 -o alignment.bam -
 gunzip -c reads.fastq.gz | NanoFilt -q 12 --headcrop 75 | gzip > trimmed-reads.fastq.gz
 gunzip -c reads.fastq.gz | NanoFilt -q 10 | gzip > highQuality-reads.fastq.gz
 ```
+
+I welcome all suggestions, bug reports, feature requests and contributions. Please leave an [issue](https://github.com/wdecoster/nanofilt/issues) or open a pull request. I will usually respond within a day, or rarely within a few days.
