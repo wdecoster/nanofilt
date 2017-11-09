@@ -137,6 +137,10 @@ def get_args():
     args = parser.parse_args()
     if args.minGC > args.maxGC:
         sys.exit("NanoFilt: error: argument --minGC should be smaller than --maxGC")
+    if args.minGC == 0.0 and args.maxGC == 1.0:
+        args.GC_filter = False
+    else:
+        args.GC_filter = True
     return args
 
 
@@ -158,7 +162,7 @@ def filter_stream(fq, args):
     '''
     minlen = args.length + int(args.headcrop or 0) - (int(args.tailcrop or 0))
     for rec in SeqIO.parse(fq, "fastq"):
-        if (args.minGC > 0.0 or args.maxGC < 1.0):
+        if args.GC_filter:
             # one of the GC arguments has been set, we need to calcualte GC
             gc = (rec.seq.upper().count("C") + rec.seq.upper().count("G")) / len(rec)
         else:
