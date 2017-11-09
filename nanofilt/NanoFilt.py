@@ -163,7 +163,6 @@ def filter_stream(fq, args):
     minlen = args.length + int(args.headcrop or 0) - (int(args.tailcrop or 0))
     for rec in SeqIO.parse(fq, "fastq"):
         if args.GC_filter:
-            # one of the GC arguments has been set, we need to calcualte GC
             gc = (rec.seq.upper().count("C") + rec.seq.upper().count("G")) / len(rec)
         else:
             gc = 0.50  # dummy variable
