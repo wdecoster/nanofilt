@@ -3,13 +3,20 @@ language: python
 python:
   - "3.4"
   - "3.5"
-  - "3.5-dev" # 3.5 development branch
+  - "3.5-dev"
   - "3.6"
-  - "3.6-dev" # 3.6 development branch
-# command to install dependencies
-install: "pip install nanofilt"
-# command to run tests
-script: NanoFilt -h
+  - "3.6-dev"
+
+before_install:
+  - cp README.md README.rst
+  - pip install flake8
+
+install:
+  - pip install -e .
+
+script:
+  - NanoFilt -h
+  - flake8 nanofilt/NanoFilt.py
 
 notifications:
   email: false
