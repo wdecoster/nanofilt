@@ -182,7 +182,8 @@ def filter_using_summary(fq, args):
     data = {entry[0]: entry[1] for entry in process_summary(
         summaryfile=args.summary,
         threads="NA",
-        readtype=args.readtype)[
+        readtype=args.readtype,
+        barcoded=False)[
         ["readIDs", "quals"]].itertuples(index=False)}
     try:
         for record in SeqIO.parse(fq, "fastq"):
