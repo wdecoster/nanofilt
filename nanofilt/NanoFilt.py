@@ -77,12 +77,14 @@ def main():
 
 def get_args():
     epilog = """EXAMPLES:
-    gunzip -c reads.fastq.gz | NanoFilt -q 10 -l 500 --headcrop 50 | minimap2 genome.fa - | samtools sort -O BAM -@24 -o alignment.bam -
+    gunzip -c reads.fastq.gz | NanoFilt -q 10 -l 500 --headcrop 50 | \
+      minimap2 genome.fa - | samtools sort -O BAM -@24 -o alignment.bam -
     gunzip -c reads.fastq.gz | NanoFilt -q 12 --headcrop 75 | gzip > trimmed-reads.fastq.gz
     gunzip -c reads.fastq.gz | NanoFilt -q 10 | gzip > highQuality-reads.fastq.gz
     """
     parser = ArgumentParser(
-        description="Perform quality and/or length and/or GC filtering of Nanopore fastq data. Reads on stdin.",
+        description="Perform quality and/or length and/or GC filtering of Nanopore fastq data. \
+          Reads on stdin.",
         epilog=epilog,
         formatter_class=custom_formatter,
         add_help=False)
