@@ -188,7 +188,7 @@ def filter_stream(fq, args):
                       args=args,
                       minlen=minlen,
                       quality_check=quality_check)
-    with cfutures.ProcessPoolExecutor() as executor:
+    with cfutures.ThreadPoolExecutor() as executor:
         executor.map(filterw, SeqIO.parse(fq, "fastq"))
 
 
