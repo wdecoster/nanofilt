@@ -27,9 +27,11 @@ from argparse import ArgumentParser, ArgumentTypeError, HelpFormatter
 import sys
 from nanomath import ave_qual
 from nanoget import process_summary
+import concurrent.futures as cfutures
 from nanofilt.version import __version__
 import logging
 import textwrap as _textwrap
+from functools import partial
 
 
 class CustomHelpFormatter(HelpFormatter):
@@ -177,21 +179,28 @@ def filter_stream(fq, args):
     Record has to be longer than args.length (default 1) after trimming
     Use a faster silent quality_check if no filtering on quality is required
     """
-    sys.stderr.write(str(args.quality))
     if args.quality:
         quality_check = ave_qual
     else:
         quality_check = silent_quality_check
     minlen = args.length + int(args.headcrop or 0) - (int(args.tailcrop or 0))
-    for rec in SeqIO.parse(fq, "fastq"):
-        if args.GC_filter:
-            gc = (rec.seq.upper().count("C") + rec.seq.upper().count("G")) / len(rec)
-        else:
-            gc = 0.50  # dummy variable
-        if quality_check(rec.letter_annotations["phred_quality"]) > args.quality \
-                and len(rec) > minlen \
-                and args.minGC <= gc <= args.maxGC:
-            print(rec[args.headcrop:args.tailcrop].format("fastq"), end="")
+    filterw = partial(filter_worker,
+                      args=args,
+                      minlen=minlen,
+                      quality_check=quality_check)
+    with cfutures.ProcessPoolExecutor() as executor:
+        executor.map(filterw, SeqIO.parse(fq, "fastq"))
+
+
+def filter_worker(rec, args, minlen, quality_check):
+    if args.GC_filter:
+        gc = (rec.seq.upper().count("C") + rec.seq.upper().count("G")) / len(rec)
+    else:
+        gc = 0.50  # dummy variable
+    if quality_check(rec.letter_annotations["phred_quality"]) > args.quality \
+            and len(rec) > minlen \
+            and args.minGC <= gc <= args.maxGC:
+        print(rec[args.headcrop:args.tailcrop].format("fastq"), end="")
 
 
 def filter_using_summary(fq, args):
