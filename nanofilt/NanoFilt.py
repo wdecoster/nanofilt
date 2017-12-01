@@ -157,10 +157,6 @@ def valid_GC(x):
     return x
 
 
-def length_record(rec, minlen):
-    return len(rec) > minlen
-
-
 def silent_quality_check(x):
     """When no quality check needs to be performed, simply return True"""
     return True
