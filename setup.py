@@ -29,6 +29,7 @@ setup(
     ],
     keywords='nanopore sequencing processing trimming filtering',
     packages=find_packages() + ['scripts'],
+    python_requires='>=3',
     install_requires=['biopython', 'nanomath>=0.13.3', 'nanoget>=0.15.0'],
     package_data={'nanofilt': []},
     package_dir={'nanofilt': 'nanofilt'},
