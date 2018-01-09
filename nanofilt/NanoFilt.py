@@ -83,7 +83,7 @@ def get_args():
     gunzip -c reads.fastq.gz | NanoFilt -q 10 | gzip > highQuality-reads.fastq.gz
     """
     parser = ArgumentParser(
-        description="Perform quality and/or length and/or GC filtering of Nanopore fastq data. \
+        description="Perform quality and/or length and/or GC filtering of (long read) fastq data. \
           Reads on stdin.",
         epilog=epilog,
         formatter_class=custom_formatter,
