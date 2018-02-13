@@ -1,7 +1,7 @@
 Nanofilt
 ========
 
-Filtering and trimming of Oxford Nanopore sequencing data.
+Filtering and trimming of long read sequencing data.
 
 |Twitter URL| |conda badge| |Build Status| |Code Health|
 
