@@ -80,7 +80,7 @@ def get_args(custom_formatter):
         "gzip > trimmed-reads.fastq.gz\n" \
         "  gunzip -c reads.fastq.gz | NanoFilt -q 10 | gzip > highQuality-reads.fastq.gz\n"
     parser = ArgumentParser(
-        description="Perform quality and/or length and/or GC filtering of Nanopore fastq data. \
+        description="Perform quality and/or length and/or GC filtering of (long read) fastq data. \
           Reads on stdin.",
         epilog=epilog,
         formatter_class=custom_formatter,
@@ -152,10 +152,6 @@ def valid_GC(x):
     if x < 0.0 or x > 1.0:
         raise ArgumentTypeError("{} not in range [0.0, 1.0]".format(x))
     return x
-
-
-def length_record(rec, minlen):
-    return len(rec) > minlen
 
 
 def silent_quality_check(x):

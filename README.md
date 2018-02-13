@@ -1,5 +1,5 @@
 # Nanofilt
-Filtering and trimming of Oxford Nanopore sequencing data.
+Filtering and trimming of long read sequencing data.
 
 [![Twitter URL](https://img.shields.io/twitter/url/https/twitter.com/wouter_decoster.svg?style=social&label=Follow%20%40wouter_decoster)](https://twitter.com/wouter_decoster)
 [![conda badge](https://anaconda.org/bioconda/nanofilt/badges/installer/conda.svg)](https://anaconda.org/bioconda/nanofilt)
