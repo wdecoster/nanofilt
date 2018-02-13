@@ -23,8 +23,8 @@ gunzip -c reads.fastq.gz | \
 
 from __future__ import print_function
 from Bio import SeqIO
-from argparse import ArgumentParser, ArgumentTypeError, HelpFormatter
 import sys
+from argparse import ArgumentParser, ArgumentTypeError, HelpFormatter
 from nanomath import ave_qual
 from nanoget import process_summary
 from nanofilt.version import __version__
@@ -33,13 +33,6 @@ import textwrap as _textwrap
 
 
 class CustomHelpFormatter(HelpFormatter):
-    def _format_action_invocation(self, action):
-        if not action.option_strings or action.nargs == 0:
-            return super()._format_action_invocation(action)
-        default = self._get_default_metavar_for_optional(action)
-        args_string = self._format_args(action, default)
-        return ', '.join(action.option_strings) + ' ' + args_string
-
     def _fill_text(self, text, width, indent):
         return ''.join(indent + line for line in text.splitlines(keepends=True))
 
@@ -52,8 +45,12 @@ def custom_formatter(prog):
     return CustomHelpFormatter(prog)
 
 
+def default_formatter(prog):
+    return HelpFormatter(prog)
+
+
 def main():
-    args = get_args()
+    args = get_args(custom_formatter)
     try:
         logging.basicConfig(
             format='%(asctime)s %(message)s',
@@ -75,13 +72,13 @@ def main():
         raise
 
 
-def get_args():
-    epilog = """EXAMPLES:
-    gunzip -c reads.fastq.gz | NanoFilt -q 10 -l 500 --headcrop 50 | \
-      minimap2 genome.fa - | samtools sort -O BAM -@24 -o alignment.bam -
-    gunzip -c reads.fastq.gz | NanoFilt -q 12 --headcrop 75 | gzip > trimmed-reads.fastq.gz
-    gunzip -c reads.fastq.gz | NanoFilt -q 10 | gzip > highQuality-reads.fastq.gz
-    """
+def get_args(custom_formatter):
+    epilog = "EXAMPLES:\n" \
+        "  gunzip -c reads.fastq.gz | NanoFilt -q 10 -l 500 --headcrop 50 | " \
+        "minimap2 genome.fa - | samtools sort -O BAM -@24 -o alignment.bam -\n" \
+        "  gunzip -c reads.fastq.gz | NanoFilt -q 12 --headcrop 75 | " \
+        "gzip > trimmed-reads.fastq.gz\n" \
+        "  gunzip -c reads.fastq.gz | NanoFilt -q 10 | gzip > highQuality-reads.fastq.gz\n"
     parser = ArgumentParser(
         description="Perform quality and/or length and/or GC filtering of Nanopore fastq data. \
           Reads on stdin.",
