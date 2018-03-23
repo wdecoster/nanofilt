@@ -100,6 +100,10 @@ def get_args(custom_formatter):
                            help="Filter on a minimum read length",
                            default=1,
                            type=int)
+    filtering.add_argument("--maxlength",
+                           help="Filter on a maximum read length",
+                           default=1e12,
+                           type=int)
     filtering.add_argument("-q", "--quality",
                            help="Filter on a minimum average read quality score",
                            default=0,
@@ -182,7 +186,7 @@ def filter_stream(fq, args):
         else:
             gc = 0.50  # dummy variable
         if quality_check(rec.letter_annotations["phred_quality"]) > args.quality \
-                and len(rec) > minlen \
+                and minlen <= len(rec) <= args.maxlength \
                 and args.minGC <= gc <= args.maxGC:
             print(rec[args.headcrop:args.tailcrop].format("fastq"), end="")
 
@@ -201,7 +205,8 @@ def filter_using_summary(fq, args):
         ["readIDs", "quals"]].itertuples(index=False)}
     try:
         for record in SeqIO.parse(fq, "fastq"):
-            if data[record.id] > args.quality and len(record) > args.length:
+            if data[record.id] > args.quality \
+                    and args.length <= len(record) <= args.maxlength:
                 print(record[args.headcrop:args.tailcrop].format("fastq"), end="")
     except KeyError:
         logging.error("mismatch between summary and fastq: \

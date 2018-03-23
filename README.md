@@ -3,7 +3,7 @@ Filtering and trimming of long read sequencing data.
 
 [![Twitter URL](https://img.shields.io/twitter/url/https/twitter.com/wouter_decoster.svg?style=social&label=Follow%20%40wouter_decoster)](https://twitter.com/wouter_decoster)
 [![conda badge](https://anaconda.org/bioconda/nanofilt/badges/installer/conda.svg)](https://anaconda.org/bioconda/nanofilt)
-[![Build Status](https://travis-ci.org/wdecoster/nanofilt.svg?branch=master)](https://travis-ci.org/wdecoster/nanofilt) [![Code Health](https://landscape.io/github/wdecoster/nanofilt/master/landscape.svg?style=flat)](https://landscape.io/github/wdecoster/nanofilt/master)
+[![Build Status](https://travis-ci.org/wdecoster/nanofilt.svg?branch=master)](https://travis-ci.org/wdecoster/nanofilt)
 
 
 
@@ -36,8 +36,10 @@ NanoFilt [-h] [-q QUALITY] [-l LENGTH] [--headcrop HEADCROP] [--tailcrop TAILCRO
 optional arguments:  
   -h, --help            show this help message and exit  
   -s --summary SUMMARYFILE optional, the sequencing_summary file from albacore for extracting quality scores
-  -q, --quality QUALITY  Filter on a minimum average read quality score  
-  -l, --length LENGTH Filter on a minimum read length  
+  -q, --quality QUALITY Filter on a minimum average read quality score  
+  -l, --length LENGTH   Filter on a minimum read length  
+  --maxlength MAXLENGTH Filter on a maximum read length
+
   --headcrop HEADCROP   Trim n nucleotides from start of read  
   --tailcrop TAILCROP   Trim n nucleotides from end of read
   --minGC MINGC         Sequences must have GC content >= to this. Float
