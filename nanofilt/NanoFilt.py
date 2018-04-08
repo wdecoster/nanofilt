@@ -54,7 +54,7 @@ def main():
     try:
         logging.basicConfig(
             format='%(asctime)s %(message)s',
-            filename="NanoFilt.log",
+            filename=args.logfile,
             level=logging.INFO)
     except PermissionError:
         pass  # indicates that user has no write permission in this directory. No logs then
@@ -94,6 +94,9 @@ def get_args(custom_formatter):
                          help="Print version and exit.",
                          action="version",
                          version='NanoFilt {}'.format(__version__))
+    general.add_argument("--logfile",
+                         help="Specify the path and filename for the log file.",
+                         default="NanoFilt.log")
     filtering = parser.add_argument_group(
         title='Options for filtering reads on.')
     filtering.add_argument("-l", "--length",
