@@ -54,7 +54,7 @@ def main():
     try:
         logging.basicConfig(
             format='%(asctime)s %(message)s',
-            filename="NanoFilt.log",
+            filename=args.logfile,
             level=logging.INFO)
     except PermissionError:
         pass  # indicates that user has no write permission in this directory. No logs then
@@ -94,11 +94,18 @@ def get_args(custom_formatter):
                          help="Print version and exit.",
                          action="version",
                          version='NanoFilt {}'.format(__version__))
+    general.add_argument("--logfile",
+                         help="Specify the path and filename for the log file.",
+                         default="NanoFilt.log")
     filtering = parser.add_argument_group(
         title='Options for filtering reads on.')
     filtering.add_argument("-l", "--length",
                            help="Filter on a minimum read length",
                            default=1,
+                           type=int)
+    filtering.add_argument("--maxlength",
+                           help="Filter on a maximum read length",
+                           default=1e12,
                            type=int)
     filtering.add_argument("-q", "--quality",
                            help="Filter on a minimum average read quality score",
@@ -182,7 +189,7 @@ def filter_stream(fq, args):
         else:
             gc = 0.50  # dummy variable
         if quality_check(rec.letter_annotations["phred_quality"]) > args.quality \
-                and len(rec) > minlen \
+                and minlen <= len(rec) <= args.maxlength \
                 and args.minGC <= gc <= args.maxGC:
             print(rec[args.headcrop:args.tailcrop].format("fastq"), end="")
 
@@ -201,7 +208,8 @@ def filter_using_summary(fq, args):
         ["readIDs", "quals"]].itertuples(index=False)}
     try:
         for record in SeqIO.parse(fq, "fastq"):
-            if data[record.id] > args.quality and len(record) > args.length:
+            if data[record.id] > args.quality \
+                    and args.length <= len(record) <= args.maxlength:
                 print(record[args.headcrop:args.tailcrop].format("fastq"), end="")
     except KeyError:
         logging.error("mismatch between summary and fastq: \

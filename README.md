@@ -3,7 +3,7 @@ Filtering and trimming of long read sequencing data.
 
 [![Twitter URL](https://img.shields.io/twitter/url/https/twitter.com/wouter_decoster.svg?style=social&label=Follow%20%40wouter_decoster)](https://twitter.com/wouter_decoster)
 [![conda badge](https://anaconda.org/bioconda/nanofilt/badges/installer/conda.svg)](https://anaconda.org/bioconda/nanofilt)
-[![Build Status](https://travis-ci.org/wdecoster/nanofilt.svg?branch=master)](https://travis-ci.org/wdecoster/nanofilt) [![Code Health](https://landscape.io/github/wdecoster/nanofilt/master/landscape.svg?style=flat)](https://landscape.io/github/wdecoster/nanofilt/master)
+[![Build Status](https://travis-ci.org/wdecoster/nanofilt.svg?branch=master)](https://travis-ci.org/wdecoster/nanofilt)
 
 
 
@@ -36,8 +36,10 @@ NanoFilt [-h] [-q QUALITY] [-l LENGTH] [--headcrop HEADCROP] [--tailcrop TAILCRO
 optional arguments:  
   -h, --help            show this help message and exit  
   -s --summary SUMMARYFILE optional, the sequencing_summary file from albacore or guppy for extracting quality scores
-  -q, --quality QUALITY  Filter on a minimum average read quality score  
-  -l, --length LENGTH Filter on a minimum read length  
+  -q, --quality QUALITY Filter on a minimum average read quality score  
+  -l, --length LENGTH   Filter on a minimum read length  
+  --maxlength MAXLENGTH Filter on a maximum read length
+
   --headcrop HEADCROP   Trim n nucleotides from start of read  
   --tailcrop TAILCROP   Trim n nucleotides from end of read
   --minGC MINGC         Sequences must have GC content >= to this. Float
@@ -54,3 +56,6 @@ gunzip -c reads.fastq.gz | NanoFilt -q 10 | gzip > highQuality-reads.fastq.gz
 ```
 
 I welcome all suggestions, bug reports, feature requests and contributions. Please leave an [issue](https://github.com/wdecoster/nanofilt/issues) or open a pull request. I will usually respond within a day, or rarely within a few days.
+
+## CITATION
+If you use this tool, please consider citing our [publication](https://academic.oup.com/bioinformatics/advance-article/doi/10.1093/bioinformatics/bty149/4934939).

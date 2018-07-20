@@ -1,1 +1,2 @@
 include scripts/test.sh
+include README.md
