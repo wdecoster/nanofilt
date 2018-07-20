@@ -35,7 +35,7 @@ NanoFilt [-h] [-q QUALITY] [-l LENGTH] [--headcrop HEADCROP] [--tailcrop TAILCRO
 
 optional arguments:  
   -h, --help            show this help message and exit  
-  -s --summary SUMMARYFILE optional, the sequencing_summary file from albacore for extracting quality scores
+  -s --summary SUMMARYFILE optional, the sequencing_summary file from albacore or guppy for extracting quality scores
   -q, --quality QUALITY  Filter on a minimum average read quality score  
   -l, --length LENGTH Filter on a minimum read length  
   --headcrop HEADCROP   Trim n nucleotides from start of read  

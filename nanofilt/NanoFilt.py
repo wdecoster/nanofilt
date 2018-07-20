@@ -127,7 +127,7 @@ def get_args(custom_formatter):
     inputoptions = parser.add_argument_group(
         title='Input options.')
     inputoptions.add_argument("-s", "--summary",
-                              help="Use summary file for quality scores")
+                              help="Use albacore or guppy summary file for quality scores")
     inputoptions.add_argument("--readtype",
                               help="Which read type to extract information about from summary. \
                               Options are 1D, 2D or 1D2",
