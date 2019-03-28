@@ -26,7 +26,7 @@ from Bio import SeqIO
 import sys
 from argparse import ArgumentParser, ArgumentTypeError, HelpFormatter
 from nanomath import ave_qual
-from nanoget import process_summary
+from nanoget.extraction_functions import process_summary
 from nanofilt.version import __version__
 import logging
 import textwrap as _textwrap
