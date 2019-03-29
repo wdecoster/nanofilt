@@ -177,7 +177,6 @@ def filter_stream(fq, args):
     Record has to be longer than args.length (default 1) after trimming
     Use a faster silent quality_check if no filtering on quality is required
     """
-    sys.stderr.write(str(args.quality))
     if args.quality:
         quality_check = ave_qual
     else:
