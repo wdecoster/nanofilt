@@ -63,9 +63,9 @@ def main():
         if args.tailcrop:
             args.tailcrop = -args.tailcrop
         if args.summary:
-            filter_using_summary(sys.stdin, args)
+            filter_using_summary(args.input, args)
         else:
-            filter_stream(sys.stdin, args)
+            filter_stream(args.input, args)
         logging.info('NanoFilt finished.')
     except Exception as e:
         logging.error(e, exc_info=True)
@@ -97,6 +97,10 @@ def get_args(custom_formatter):
     general.add_argument("--logfile",
                          help="Specify the path and filename for the log file.",
                          default="NanoFilt.log")
+    general.add_argument("input",
+                         help="input, uncompressed fastq file",
+                         default=sys.stdin,
+                         nargs='?')
     filtering = parser.add_argument_group(
         title='Options for filtering reads on.')
     filtering.add_argument("-l", "--length",
