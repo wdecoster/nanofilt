@@ -191,7 +191,7 @@ def filter_stream(fq, args):
             gc = (rec.seq.upper().count("C") + rec.seq.upper().count("G")) / len(rec)
         else:
             gc = 0.50  # dummy variable
-        if quality_check(rec.letter_annotations["phred_quality"]) > args.quality \
+        if quality_check(rec.letter_annotations["phred_quality"]) >= args.quality \
                 and minlen <= len(rec) <= args.maxlength \
                 and args.minGC <= gc <= args.maxGC:
             print(rec[args.headcrop:args.tailcrop].format("fastq"), end="")
@@ -211,7 +211,7 @@ def filter_using_summary(fq, args):
         ["readIDs", "quals"]].itertuples(index=False)}
     try:
         for record in SeqIO.parse(fq, "fastq"):
-            if data[record.id] > args.quality \
+            if data[record.id] >= args.quality \
                     and args.length <= len(record) <= args.maxlength:
                 print(record[args.headcrop:args.tailcrop].format("fastq"), end="")
     except KeyError:
