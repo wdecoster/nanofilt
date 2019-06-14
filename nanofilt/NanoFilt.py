@@ -201,7 +201,6 @@ def filter_using_summary(fq, args):
     """Use quality scores from albacore summary file for filtering
 
     Use the summary file from albacore for more accurate quality estimate
-    Get the dataframe from nanoget, convert to dictionary
     """
     if args.readtype == "1D":
         cols = ["read_id", "mean_qscore_template"]
