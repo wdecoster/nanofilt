@@ -24,8 +24,8 @@ gunzip -c reads.fastq.gz | \
 from __future__ import print_function
 from Bio import SeqIO
 import sys
+import pandas as pd
 from argparse import ArgumentParser, ArgumentTypeError, HelpFormatter
-from nanoget.extraction_functions import process_summary
 from nanofilt.version import __version__
 import logging
 import textwrap as _textwrap
@@ -203,12 +203,17 @@ def filter_using_summary(fq, args):
     Use the summary file from albacore for more accurate quality estimate
     Get the dataframe from nanoget, convert to dictionary
     """
-    data = {entry[0]: entry[1] for entry in process_summary(
-        summaryfile=args.summary,
-        threads="NA",
-        readtype=args.readtype,
-        barcoded=False)[
-        ["readIDs", "quals"]].itertuples(index=False)}
+    if args.readtype == "1D":
+        cols = ["read_id", "mean_qscore_template"]
+    elif args.readtype in ["2D", "1D2"]:
+        cols = ["read_id", "mean_qscore_2d"]
+    data = pd.read_csv(
+        filepath_or_buffer=args.summary,
+        sep="\t",
+        usecols=cols,
+    ).rename(mapper={"mean_qscore_template": "quals", "mean_qscore_2d": "quals"}, axis="columns") \
+        .set_index("read_id") \
+        .to_dict()["quals"]
     try:
         for record in SeqIO.parse(fq, "fastq"):
             if data[record.id] >= args.quality \
