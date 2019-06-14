@@ -215,15 +215,14 @@ def filter_using_summary(fq, args):
         .set_index("read_id") \
         .to_dict()["quals"]
     try:
-        for record in SeqIO.parse(fq, "fastq"):
-            if data[record.id] >= args.quality \
-                    and args.length <= len(record) <= args.maxlength:
-                print(record[args.headcrop:args.tailcrop].format("fastq"), end="")
+        for rec in SeqIO.parse(fq, "fastq"):
+            if data[rec.id] >= args.quality and args.length <= len(rec) <= args.maxlength:
+                print(rec[args.headcrop:args.tailcrop].format("fastq"), end="")
     except KeyError:
         logging.error("mismatch between summary and fastq: \
-                       {} was not found in the summary file.".format(record.id))
+                       {} was not found in the summary file.".format(rec.id))
         sys.exit('\nERROR: mismatch between sequencing_summary and fastq file: \
-                 {} was not found in the summary file.\nQuitting.'.format(record.id))
+                 {} was not found in the summary file.\nQuitting.'.format(rec.id))
 
 
 def errs_tab(n):
