@@ -244,7 +244,8 @@ def ave_qual(quals, qround=False, tab=errs_tab(128)):
         else:
             return mq
     else:
-        return None
+        sys.stderr.write("Warning: Encountered a zero-length read!")
+        return 0
 
 
 if __name__ == "__main__":
