@@ -94,15 +94,17 @@ def filter_using_summary(fq, args):
     ).rename(mapper={"mean_qscore_template": "quals", "mean_qscore_2d": "quals"}, axis="columns") \
         .set_index("read_id") \
         .to_dict()["quals"]
-    try:
-        for rec in SeqIO.parse(fq, "fastq"):
+    for rec in SeqIO.parse(fq, "fastq"):
+        try:
             if data[rec.id] >= args.quality and args.length <= len(rec) <= args.maxlength:
                 print(rec[args.headcrop:args.tailcrop].format("fastq"), end="")
-    except KeyError:
-        logging.error("mismatch between summary and fastq: \
-                       {} was not found in the summary file.".format(rec.id))
-        sys.exit('\nERROR: mismatch between sequencing_summary and fastq file: \
-                 {} was not found in the summary file.\nQuitting.'.format(rec.id))
+        except KeyError:
+            logging.warning("mismatch between summary and fastq: \
+                   {} was not found in the summary file. \
+                   Falling back to calculating.".format(rec.id))
+            if ave_qual(rec.letter_annotations["phred_quality"]) >= args.quality \
+                    and args.length <= len(rec) <= args.maxlength:
+                print(rec[args.headcrop:args.tailcrop].format("fastq"), end="")
 
 
 def errs_tab(n):
