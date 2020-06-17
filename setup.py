@@ -17,7 +17,7 @@ setup(
     url='https://github.com/wdecoster/nanofilt',
     author='Wouter De Coster',
     author_email='decosterwouter@gmail.com',
-    license='MIT',
+    license='GPLv3',
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Science/Research',
