@@ -36,6 +36,8 @@ def main():
     try:
         if args.tailcrop:
             args.tailcrop = -args.tailcrop
+        if args.tailcrop == 0:
+            args.tailcrop = None
         if args.summary:
             filter_using_summary(args.input, args)
         else:
