@@ -84,7 +84,6 @@ def get_args():
         args.GC_filter = False
     else:
         args.GC_filter = True
-    logging.info('NanoFilt {} started with arguments {}'.format(__version__, args))
     return args
 
 
