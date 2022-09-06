@@ -28,11 +28,13 @@ import pandas as pd
 import nanofilt.utils as utils
 import logging
 from math import log
+from nanofilt.version import __version__
 
 
 def main():
     args = utils.get_args()
     utils.start_logging(args.logfile)
+    logging.info('NanoFilt {} started with arguments {}'.format(__version__, args))
     try:
         if args.tailcrop:
             args.tailcrop = -args.tailcrop
