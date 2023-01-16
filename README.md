@@ -1,9 +1,10 @@
 # Nanofilt
 Filtering and trimming of long read sequencing data.
 
+**Please be aware that NanoFilt will no longer receive any updates, as (most of) its functionality is included in [chopper](https://github.com/wdecoster/chopper) (which should be lots faster, too).**
+
 [![Twitter URL](https://img.shields.io/twitter/url/https/twitter.com/wouter_decoster.svg?style=social&label=Follow%20%40wouter_decoster)](https://twitter.com/wouter_decoster)
 [![conda badge](https://anaconda.org/bioconda/nanofilt/badges/installer/conda.svg)](https://anaconda.org/bioconda/nanofilt)
-[![Build Status](https://travis-ci.org/wdecoster/nanofilt.svg?branch=master)](https://travis-ci.org/wdecoster/nanofilt)
 
 
 
